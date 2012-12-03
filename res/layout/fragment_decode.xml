@@ -6,11 +6,33 @@
 
    
 
-    
-
-    <Button
+    <TextView
+        android:id="@+id/textview_content"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="开始解码" />
+        android:layout_weight="1"
+        />
 
+     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    
+    <Button
+        android:id="@+id/button_decode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+        android:text="拍摄解码" />
+    
+    <Button 
+        android:id="@+id/button_pdecode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+        android:text="图片解码"
+        />
+    
+     </RelativeLayout>
+
+    
 </LinearLayout>

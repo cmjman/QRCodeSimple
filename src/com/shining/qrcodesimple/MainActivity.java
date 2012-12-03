@@ -3,79 +3,42 @@ package com.shining.qrcodesimple;
 
 
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
+
+import com.shining.qrcodesimple.DecodeFragment.OnMyButtonClickListener1;
 import com.shining.qrcodesimple.EncodeFragment.OnMyButtonClickListener;
 import com.shining.qrcodesimple.EncodeFragment;
 
-
-
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Typeface;
-import android.graphics.Bitmap.Config;
-
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
 
-
-
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TabHost;
-import android.widget.Toast;
 
 
-public class MainActivity extends FragmentActivity implements OnMyButtonClickListener{
-	
-
-
+public class MainActivity extends FragmentActivity implements OnMyButtonClickListener,OnMyButtonClickListener1{
 	
 	private FragmentTabHost mTabHost;
 	
 	private EncodeFragment encodeFragment;
 
-
 	private DecodeFragment decodeFragment;
-	
-
-	
-	
-	
-//	private ViewPager mViewPager;  
-	
-
-	
-	
 	
 	public void onMyButtonClick(int i) {
 		
-		 encodeFragment= (EncodeFragment) getSupportFragmentManager().findFragmentByTag("encode");
+		encodeFragment= (EncodeFragment) getSupportFragmentManager().findFragmentByTag("encode");
 		
 		switch(i)
 		{
 			case 1:
 			{
-			//	getFragmentManager().findFragmentByTag("encode").;
 				
-			//	System.out.println("1111");
-				
-				encodeFragment.encode(10);break;
+				/*
+ 					Size of QRcode is defined as version.
+					Version is from 1 to 40.
+					Version 1 is 21*21 matrix. And 4 modules increases whenever 1 version increases. 
+					So version 40 is 177*177 matrix.
+				 */
+				encodeFragment.encode(30);break;
 			}
 			case 2:
 			{
@@ -89,6 +52,25 @@ public class MainActivity extends FragmentActivity implements OnMyButtonClickLis
 		}
 		
 		
+	}
+	
+	public void onMyButtonClick1(int i) {
+	
+		decodeFragment= (DecodeFragment) getSupportFragmentManager().findFragmentByTag("decode");
+	
+		switch(i)
+		{
+			case 1:
+			{
+				decodeFragment.decode();
+				break;
+			}
+			case 2:
+			{
+				decodeFragment.pdecode();
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -105,22 +87,5 @@ public class MainActivity extends FragmentActivity implements OnMyButtonClickLis
 	        mTabHost.addTab(mTabHost.newTabSpec("decode").setIndicator("½âÂë"),
 	                DecodeFragment.class, null);
 	        
-	       
-	        
-	       
-	        
-	       
-	      
-	
-	
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
+	   }
 }

@@ -11,17 +11,13 @@ import java.io.IOException;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.graphics.Bitmap.Config;
 import android.os.Bundle;
 import android.os.Environment;
-
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -37,19 +33,12 @@ public class EncodeFragment  extends Fragment{
 	private Button button_encode;
 	private Button button_save;
 	
-	
-	
-private ImageView imageview_qrcode;
+	private ImageView imageview_qrcode;
 
-private EditText edittext_content;
+	private EditText edittext_content;
 	
-private Bitmap mBitmap;
-private Bitmap bm;
+	private Bitmap mBitmap;
 
-	
-//	private ImageView view_qrcode;
-
-	
 	public interface OnMyButtonClickListener {
 		
 		public void onMyButtonClick(int i);
@@ -78,6 +67,7 @@ private Bitmap bm;
     	button_save=(Button)getActivity().findViewById(R.id.button_save);
     	
     	edittext_content=(EditText)getActivity().findViewById(R.id.edittext_content);
+    	imageview_qrcode=(ImageView)getActivity().findViewById(R.id.imageview_qrcode);
         
         MyButtonClickListener clickListener = new MyButtonClickListener();
         
@@ -95,48 +85,29 @@ private Bitmap bm;
 	 @Override
 	    public void onCreate(Bundle savedInstanceState)
 	    {
-	       
 	        super.onCreate(savedInstanceState);
-	        
-	      //  MyButtonClickListener clickListener = new MyButtonClickListener();
-	        
-	      
-	        
-	       
-	        
-	        
-	        
-	        
 	    }
 
 	    @Override
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	    {
-	    	
-	    	
-		    	
-	    	
-	    	
-	    	
-	    	
-	    	//canvas_qrcode=(Canvas)getActivity().findViewById(R.id.canvas_qrcode);
-	    	
 	        return inflater.inflate(R.layout.fragment_encode, container, false);
 	    }
 	    
 	    
 	    public void encode(int qrcodeVersion){
 	    	
-	    	
-	    	
-			
 			try{
 				
 				String strEncoding=edittext_content.getText().toString();
 				
-				System.out.println(strEncoding);
-				
 				com.swetake.util.Qrcode qrcode=new com.swetake.util.Qrcode();
+				
+				
+				// level L : About 7% or less errors can be corrected.
+				//level M : About 15% or less errors can be corrected.
+				//level Q : About 25% or less errors can be corrected.
+				//level H : About 30% or less errors can be corrected.
 				
 				qrcode.setQrcodeErrorCorrect('H');
 				
@@ -158,36 +129,17 @@ private Bitmap bm;
 	    
 	    public void drawQRCode(boolean[][] bRect,int colorFill){
 			
-			int intPaddingLeft=270;
-			int intPaddingTop=100;
-			
-			
-			  int  width = 480; 
-			  int  height = 288; 
-			  int  mid_x = (int)width/2;
-			  int  mid_y = (int)height/2;
+	    	  int  width = 540; 
+			  int  height = 480; 
+	
 		
 			 mBitmap=Bitmap.createBitmap(width,height,Config.ARGB_8888);
 			 
-			
-		//	bm=view_qrcode.getBitmap();
-			
-			Canvas mCanvas=new Canvas(mBitmap);
-		//	mCanvas.drawColor(getResources().getColor(R.color.white));
-			 
-			// canvas_qrcode=new Canvas(mBitmap);
-			
+			Canvas mCanvas=new Canvas();
+			mCanvas.setBitmap(mBitmap);
+	
 			Paint mPaint=new Paint();
-			
-			mCanvas.drawBitmap(bm, 0, 0, null);
-			
-			 String familyName = "仿宋";
-			 Typeface font = Typeface.create(familyName,Typeface.BOLD); 
-			
-			 mPaint.setColor(Color.BLUE);
-			 mPaint.setTypeface(font);
-			 mPaint.setTextSize(25);
-			 
+		
 			mPaint.setStyle(Paint.Style.FILL);
 			mPaint.setColor(colorFill);
 			mPaint.setStrokeWidth(1.0F);
@@ -196,20 +148,16 @@ private Bitmap bm;
 				for(int j=0;j<bRect.length;j++){
 					if(bRect[j][i]){
 						mCanvas.drawRect(new Rect(
-								intPaddingLeft+j*3+2,
-								intPaddingTop+i*3+2,
-								intPaddingLeft+j*3+2+3,
-								intPaddingTop+i*3+2+3
+								j*3+2,
+								i*3+2,
+								j*3+2+3,
+								i*3+2+3
 								),mPaint);
 					}
 				}
 			}
-			
-		
-
 			imageview_qrcode.setImageBitmap(mBitmap);
-			
-		//	canvas_qrcode.setBitmap(mBitmap);
+	
 			
 		}
 	    
@@ -230,10 +178,8 @@ private Bitmap bm;
 				os.flush();
 				os.close();
 				
-				Toast.makeText(getActivity(), "保存名片成功！",
+				Toast.makeText(getActivity(), "保存QRCode成功！",
 	                    Toast.LENGTH_SHORT).show();
-				
-			//	mPagerAdapter.setBitmap(bm);
 				
 			}catch(FileNotFoundException e){
 				e.printStackTrace();
@@ -241,10 +187,6 @@ private Bitmap bm;
 				e.printStackTrace();
 			}
 		}
-	    
-	  
-	    
-	   
 	    
 	    public void onResume()
 		{
