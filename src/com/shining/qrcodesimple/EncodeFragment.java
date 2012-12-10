@@ -101,6 +101,10 @@ public class EncodeFragment  extends Fragment{
 				
 				String strEncoding=edittext_content.getText().toString();
 				
+				if(strEncoding.isEmpty())
+					Toast.makeText(getActivity(), "输入内容为空，请先输入需要编码的内容！",
+		                    Toast.LENGTH_SHORT).show();
+				
 				com.swetake.util.Qrcode qrcode=new com.swetake.util.Qrcode();
 				
 				
@@ -161,6 +165,13 @@ public class EncodeFragment  extends Fragment{
 			
 		}
 	    
+	    public boolean isQRCodeEmpty(){
+	    	
+	    	if(mBitmap==null)
+	    		return true;
+	    	return false;
+	    }
+	    
 	    public void saveQRCode(){
 			
 			File path=new File(SAVE_PICTURE_PATH);
@@ -178,7 +189,7 @@ public class EncodeFragment  extends Fragment{
 				os.flush();
 				os.close();
 				
-				Toast.makeText(getActivity(), "保存QRCode成功！",
+				Toast.makeText(getActivity(), "保存QRCode成功！保存位置为："+SAVE_PICTURE_PATH,
 	                    Toast.LENGTH_SHORT).show();
 				
 			}catch(FileNotFoundException e){

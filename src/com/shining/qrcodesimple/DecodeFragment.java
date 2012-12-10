@@ -1,6 +1,11 @@
 package com.shining.qrcodesimple;
 
+import com.google.zxing.*;
+
+
+
 import jp.sourceforge.qrcode.QRCodeDecoder;
+
 
 import android.app.Activity;
 import android.content.Intent;
@@ -82,10 +87,16 @@ public class DecodeFragment extends Fragment{
 	    
 	    public void decode(){
 	    	
-	   	 Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+	    	
+	  // 	 Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+	    Intent intent =new Intent("com.shining.qrcodesimple.library.com.google.zxing.client.android.SCAN");
+	   // 	Intent intent =new Intent(getActivity(),CaptureActivity.class);
 	     intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
 	     startActivityForResult(intent, 1);
 	    	
+	    	
+	    	//  IntentIntegrator integrator = new IntentIntegrator(getActivity());
+	       //   integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
 	    }
 	    
 	    public void pdecode(){

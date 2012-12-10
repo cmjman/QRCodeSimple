@@ -13,6 +13,7 @@ import android.os.Bundle;
 
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.widget.Toast;
 
 
 public class MainActivity extends FragmentActivity implements OnMyButtonClickListener,OnMyButtonClickListener1{
@@ -38,13 +39,14 @@ public class MainActivity extends FragmentActivity implements OnMyButtonClickLis
 					Version 1 is 21*21 matrix. And 4 modules increases whenever 1 version increases. 
 					So version 40 is 177*177 matrix.
 				 */
+				
 				encodeFragment.encode(30);break;
 			}
 			case 2:
 			{
-			//	if(mBitmap==null)
-			//		Toast.makeText(MainActivity.this,"请先生成二维码再保存！",Toast.LENGTH_SHORT).show();
-		//		else 
+				if(encodeFragment.isQRCodeEmpty())
+					Toast.makeText(MainActivity.this,"请先生成二维码再保存！",Toast.LENGTH_SHORT).show();
+				else 
 					encodeFragment.saveQRCode();
 				break;
 			}

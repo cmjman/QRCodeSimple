@@ -10,6 +10,10 @@
         android:id="@+id/textview_content"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:textSize="26dp"
+        android:textColor="@android:color/black"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         />
 
@@ -21,7 +25,7 @@
         android:id="@+id/button_decode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-          android:layout_alignParentLeft="true"
+        android:layout_alignParentLeft="true"
         android:text="拍摄解码" />
     
     <Button 
