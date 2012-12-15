@@ -26,7 +26,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="生成的二维码如下:"
+        android:text="生成的二维码如下(长按可分享):"
         android:textSize="20dp" />
 
     <ImageView
@@ -42,18 +42,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <Button
+        <ImageButton
             android:id="@+id/button_encode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+             android:src="@drawable/button_ok"
             android:text="生成" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:src="@drawable/button_save"
             android:text="保存" />
     </RelativeLayout>
 

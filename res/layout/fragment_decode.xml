@@ -4,7 +4,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+   <ImageView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:background="@drawable/android" />
    
+    <TextView
+       android:id="@+id/textview_label"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:textSize="20dp"
+       android:text="点击左下角按钮拍摄二维码或右下角解码图片"
+       android:layout_gravity="center"
+   
+       android:layout_margin="5dp"
+       android:layout_weight="0.7"
+       />
+     </LinearLayout>
 
     <TextView
         android:id="@+id/textview_content"
@@ -15,24 +36,27 @@
         android:textColor="@android:color/black"
         android:layout_margin="5dp"
         android:layout_weight="1"
+        android:autoLink="all"
         />
 
      <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     
-    <Button
+    <ImageButton
         android:id="@+id/button_decode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:src="@drawable/button_cdecode"
         android:text="拍摄解码" />
     
-    <Button 
+    <ImageButton 
         android:id="@+id/button_pdecode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
          android:layout_alignParentRight="true"
+          android:src="@drawable/button_pdecode"
         android:text="图片解码"
         />
     

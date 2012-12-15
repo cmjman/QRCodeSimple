@@ -1,23 +1,26 @@
 package com.shining.qrcodesimple;
 
 
-
-
-
-
 import com.shining.qrcodesimple.DecodeFragment.OnMyButtonClickListener1;
-import com.shining.qrcodesimple.EncodeFragment.OnMyButtonClickListener;
 import com.shining.qrcodesimple.EncodeFragment;
+import com.shining.qrcodesimple.EncodeFragment.OnMyButtonClickListener;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 
-public class MainActivity extends FragmentActivity implements OnMyButtonClickListener,OnMyButtonClickListener1{
-	
+
+public class MainActivity extends FragmentActivity  implements OnMyButtonClickListener,OnMyButtonClickListener1
+															{
+
 	private FragmentTabHost mTabHost;
 	
 	private EncodeFragment encodeFragment;
@@ -32,15 +35,7 @@ public class MainActivity extends FragmentActivity implements OnMyButtonClickLis
 		{
 			case 1:
 			{
-				
-				/*
- 					Size of QRcode is defined as version.
-					Version is from 1 to 40.
-					Version 1 is 21*21 matrix. And 4 modules increases whenever 1 version increases. 
-					So version 40 is 177*177 matrix.
-				 */
-				
-				encodeFragment.encode(30);break;
+				encodeFragment.encode(15);break;
 			}
 			case 2:
 			{
@@ -50,11 +45,9 @@ public class MainActivity extends FragmentActivity implements OnMyButtonClickLis
 					encodeFragment.saveQRCode();
 				break;
 			}
-			
 		}
-		
-		
 	}
+	
 	
 	public void onMyButtonClick1(int i) {
 	
@@ -75,19 +68,83 @@ public class MainActivity extends FragmentActivity implements OnMyButtonClickLis
 		}
 	}
 
-	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_main);
 		
-		 mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
-	        mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-
-	        mTabHost.addTab(mTabHost.newTabSpec("encode").setIndicator("编码"),
+		mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
+	    mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+	
+	    mTabHost.addTab(mTabHost.newTabSpec("encode").setIndicator("编码",
+	        		getResources().getDrawable(R.drawable.button_encode)),
 	                EncodeFragment.class, null);
-	        mTabHost.addTab(mTabHost.newTabSpec("decode").setIndicator("解码"),
+	    
+	    mTabHost.addTab(mTabHost.newTabSpec("decode").setIndicator("解码",
+	        		getResources().getDrawable(R.drawable.button_decode)),
 	                DecodeFragment.class, null);
-	        
 	   }
+	
+	public void ExitProgram(){
+		 
+		  Intent exit = new Intent(Intent.ACTION_MAIN);
+        exit.addCategory(Intent.CATEGORY_HOME);
+        exit.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(exit);
+        System.exit(0);
+               
+		 
+	 }
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+			
+			if(keyCode==KeyEvent.KEYCODE_BACK) {
+				
+				new AlertDialog.Builder(this)
+				 .setTitle("退出")
+				 .setMessage("确定退出吗？")
+				 .setIcon(R.drawable.ic_launcher)
+				 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+				                 
+				      public void onClick(DialogInterface dialog, int which) {
+				                
+				    	  ExitProgram();
+				    	
+				      }
+				  })
+				 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+				                 
+				        public void onClick(DialogInterface dialog, int which) {
+				                  
+				           dialog.cancel();
+				        }
+			            
+				 })
+			     .show();
+				
+				return true;
+			}
+			 
+			return super.onKeyDown(keyCode, event);
+		}
+	 
+	 public boolean onCreateOptionsMenu(Menu menu) {
+	 
+	
+		 menu.add(0, 1, 1, "退出");
+	
+	    return super.onCreateOptionsMenu(menu);
+	 }
+	 
+
+     public boolean onOptionsItemSelected(MenuItem item) {
+   
+    	 if(item.getItemId() == 1){
+    		 
+    		  ExitProgram();
+	        	 
+    	 }
+    	
+         return true;
+     }
 }

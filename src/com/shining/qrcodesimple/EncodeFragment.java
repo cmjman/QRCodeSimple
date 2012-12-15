@@ -8,21 +8,25 @@ import java.io.IOException;
 
 
 
+
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Bitmap.Config;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -30,14 +34,16 @@ public class EncodeFragment  extends Fragment{
 	
 	private static final String SAVE_PICTURE_PATH=Environment.getExternalStorageDirectory().toString()+"/QRCode";
 	
-	private Button button_encode;
-	private Button button_save;
+	private ImageButton button_encode;
+	private ImageButton button_save;
 	
 	private ImageView imageview_qrcode;
 
 	private EditText edittext_content;
 	
 	private Bitmap mBitmap;
+	
+	private File file;
 
 	public interface OnMyButtonClickListener {
 		
@@ -63,106 +69,118 @@ public class EncodeFragment  extends Fragment{
 		
 	    super.onCreate(savedInstanceState);
 	    
-	    button_encode=(Button)getActivity().findViewById(R.id.button_encode);
-    	button_save=(Button)getActivity().findViewById(R.id.button_save);
+	    button_encode=(ImageButton)getActivity().findViewById(R.id.button_encode);
+	    button_save=(ImageButton)getActivity().findViewById(R.id.button_save);
     	
     	edittext_content=(EditText)getActivity().findViewById(R.id.edittext_content);
     	imageview_qrcode=(ImageView)getActivity().findViewById(R.id.imageview_qrcode);
         
         MyButtonClickListener clickListener = new MyButtonClickListener();
         
-		
-		
-		 button_encode.setOnClickListener(clickListener
-					);
-			        
+        button_encode.setOnClickListener(clickListener);
+			
+        button_save.setOnClickListener(clickListener);
 			       
-			        button_save.setOnClickListener(clickListener);
-			        
+		imageview_qrcode.setLongClickable(true);
+		imageview_qrcode.setOnLongClickListener(new OnLongClickListener(){
+			 
+			 public boolean onLongClick(View v){
+				 
+				 if(file==null)
+				 {
+	        			Toast.makeText(getActivity(), "请先保存二维码！",
+     	                    Toast.LENGTH_SHORT).show();
+	        			return false;
+				 }
+        			
+        		Uri uri=Uri.fromFile(file);
+        		
+        		Intent intent=new Intent(Intent.ACTION_SEND);   
+        		intent.setType("image/*");
+        		intent.putExtra(Intent.EXTRA_STREAM, uri);
+        		intent.putExtra(Intent.EXTRA_TEXT, "二维码：");    
+        		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);   
+            	
+        		startActivity(Intent.createChooser(intent,"分享我的QRCode"));  
+				 
+				 return true;
+			 }
+			 
+		 });
 			        
 	}
-	
-	 @Override
-	    public void onCreate(Bundle savedInstanceState)
-	    {
-	        super.onCreate(savedInstanceState);
-	    }
+
+	public void onCreate(Bundle savedInstanceState){
+	        
+		super.onCreate(savedInstanceState);
+	   
+	}
 
 	    @Override
-	    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	    {
-	        return inflater.inflate(R.layout.fragment_encode, container, false);
-	    }
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+	        
+	    	return inflater.inflate(R.layout.fragment_encode, container, false);
+	}
 	    
 	    
-	    public void encode(int qrcodeVersion){
+	public void encode(int qrcodeVersion){
 	    	
-			try{
+		try{
 				
-				String strEncoding=edittext_content.getText().toString();
+			String strEncoding=edittext_content.getText().toString();
 				
-				if(strEncoding.isEmpty())
-					Toast.makeText(getActivity(), "输入内容为空，请先输入需要编码的内容！",
-		                    Toast.LENGTH_SHORT).show();
+			if(strEncoding.isEmpty())
+				Toast.makeText(getActivity(), "输入内容为空，请先输入需要编码的内容！",Toast.LENGTH_SHORT).show();
 				
-				com.swetake.util.Qrcode qrcode=new com.swetake.util.Qrcode();
+			com.swetake.util.Qrcode qrcode=new com.swetake.util.Qrcode();
+	
+			qrcode.setQrcodeErrorCorrect('H');
 				
+			qrcode.setQrcodeEncodeMode('B');
 				
-				// level L : About 7% or less errors can be corrected.
-				//level M : About 15% or less errors can be corrected.
-				//level Q : About 25% or less errors can be corrected.
-				//level H : About 30% or less errors can be corrected.
+			qrcode.setQrcodeVersion(qrcodeVersion);
 				
-				qrcode.setQrcodeErrorCorrect('H');
+			byte[] bytesEncoding=strEncoding.getBytes("utf-8");
+			if(bytesEncoding.length>0&&bytesEncoding.length<120){
 				
-				qrcode.setQrcodeEncodeMode('B');
-				
-				qrcode.setQrcodeVersion(qrcodeVersion);
-				
-				byte[] bytesEncoding=strEncoding.getBytes("utf-8");
-				if(bytesEncoding.length>0&&bytesEncoding.length<120){
-					boolean[][] bEncoding=qrcode.calQrcode(bytesEncoding);
-					
-					drawQRCode(bEncoding,R.color.black);
-				}
-			}
-			catch(Exception e){
-				e.printStackTrace();
+				boolean[][] bEncoding=qrcode.calQrcode(bytesEncoding);
+				drawQRCode(bEncoding,R.color.black);
 			}
 		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 	    
-	    public void drawQRCode(boolean[][] bRect,int colorFill){
+	  public void drawQRCode(boolean[][] bRect,int colorFill){
 			
-	    	  int  width = 540; 
-			  int  height = 480; 
-	
-		
-			 mBitmap=Bitmap.createBitmap(width,height,Config.ARGB_8888);
-			 
-			Canvas mCanvas=new Canvas();
-			mCanvas.setBitmap(mBitmap);
-	
-			Paint mPaint=new Paint();
-		
-			mPaint.setStyle(Paint.Style.FILL);
-			mPaint.setColor(colorFill);
-			mPaint.setStrokeWidth(1.0F);
+	    int  width = 240; 
+	    int  height = 240; 
+
+	    mBitmap=Bitmap.createBitmap(width,height,Config.ARGB_8888);
 			
-			for(int i=0;i<bRect.length;i++){
-				for(int j=0;j<bRect.length;j++){
-					if(bRect[j][i]){
-						mCanvas.drawRect(new Rect(
-								j*3+2,
-								i*3+2,
-								j*3+2+3,
-								i*3+2+3
-								),mPaint);
+	    Canvas mCanvas=new Canvas(mBitmap);
+		mCanvas.drawARGB(169,169, 169, 169);
+	
+		Paint mPaint=new Paint();
+		mPaint.setStyle(Paint.Style.FILL);
+		mPaint.setColor(colorFill);
+		mPaint.setStrokeWidth(2.0F);
+			
+		for(int i=0;i<bRect.length;i++){
+			for(int j=0;j<bRect.length;j++){
+				if(bRect[j][i]){
+					mCanvas.drawRect(new Rect(
+						j*3+2,
+						i*3+2,
+						j*3+2+3,
+						i*3+2+3
+						),mPaint);
 					}
 				}
 			}
-			imageview_qrcode.setImageBitmap(mBitmap);
+		imageview_qrcode.setImageBitmap(mBitmap);
 	
-			
 		}
 	    
 	    public boolean isQRCodeEmpty(){
@@ -180,15 +198,14 @@ public class EncodeFragment  extends Fragment{
 				path.mkdir();
 			}
 			
-			File f=new File(SAVE_PICTURE_PATH + File.separator+"QRCard_"+System.currentTimeMillis()+".jpg");
+			file=new File(SAVE_PICTURE_PATH + File.separator+"QRCard_"+System.currentTimeMillis()+".jpg");
 				
 			try{
 				
-				BufferedOutputStream os=new BufferedOutputStream(new FileOutputStream(f));
+				BufferedOutputStream os=new BufferedOutputStream(new FileOutputStream(file));
 				mBitmap.compress(Bitmap.CompressFormat.JPEG, 80, os);
 				os.flush();
 				os.close();
-				
 				Toast.makeText(getActivity(), "保存QRCode成功！保存位置为："+SAVE_PICTURE_PATH,
 	                    Toast.LENGTH_SHORT).show();
 				
@@ -203,9 +220,7 @@ public class EncodeFragment  extends Fragment{
 		{
 	    	super.onResume();
 		}
-	    
-
-	    @Override
+	
 	    public void onStop()
 	    {
 	   
@@ -216,7 +231,7 @@ public class EncodeFragment  extends Fragment{
 		{
 			public void onClick(View v)
 			{
-				Button button = (Button) v;
+				ImageButton button = (ImageButton) v;
 				if (button == button_encode)
 					mListener.onMyButtonClick(1); 
 				if (button == button_save)
@@ -224,6 +239,4 @@ public class EncodeFragment  extends Fragment{
 				
 			}
 		}
-	   
-	
 }

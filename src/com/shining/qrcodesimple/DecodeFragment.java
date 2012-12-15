@@ -1,6 +1,6 @@
 package com.shining.qrcodesimple;
 
-import com.google.zxing.*;
+
 
 
 
@@ -21,14 +21,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 
 public class DecodeFragment extends Fragment{
 	
-		private Button button_decode;
-		private Button button_pdecode;
+		private ImageButton button_decode;
+		private ImageButton button_pdecode;
 		private TextView textview_content;
 		
 		private String strQR;
@@ -59,7 +59,7 @@ public class DecodeFragment extends Fragment{
 	        super.onCreate(savedInstanceState);
 	    }
 
-	    @Override
+
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	    {
 	
@@ -70,8 +70,8 @@ public class DecodeFragment extends Fragment{
 			
 		    super.onCreate(savedInstanceState);
 	    
-		    button_decode=(Button)getActivity().findViewById(R.id.button_decode);
-		    button_pdecode=(Button)getActivity().findViewById(R.id.button_pdecode);
+		    button_decode=(ImageButton)getActivity().findViewById(R.id.button_decode);
+		    button_pdecode=(ImageButton)getActivity().findViewById(R.id.button_pdecode);
 		    
 		    textview_content=(TextView)getActivity().findViewById(R.id.textview_content);
 		    
@@ -87,32 +87,32 @@ public class DecodeFragment extends Fragment{
 	    
 	    public void decode(){
 	    	
-	    	
-	  // 	 Intent intent = new Intent("com.google.zxing.client.android.SCAN");
 	    Intent intent =new Intent("com.shining.qrcodesimple.library.com.google.zxing.client.android.SCAN");
-	   // 	Intent intent =new Intent(getActivity(),CaptureActivity.class);
+	  
 	     intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
 	     startActivityForResult(intent, 1);
 	    	
-	    	
-	    	//  IntentIntegrator integrator = new IntentIntegrator(getActivity());
-	       //   integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
-	    }
+	    }	
 	    
 	    public void pdecode(){
 	    	
-	    	Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI); 
+	    //	Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+	    	Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+	    	intent.setType("image/*");
 			startActivityForResult(intent, 0);
 			
 			
 	    }
 	    
 		public void onActivityResult(int requestCode, int resultCode, Intent data) {  
-	        super.onActivityResult(requestCode, resultCode, data);  
+	        
+			super.onActivityResult(requestCode, resultCode, data);  
+	        
+	        if (null != data) { 
 	        
 	        if(requestCode==0){
 	        
-	        if (null != data) {  
+	        
 	            Uri selectedImage = data.getData();  
 	            String[] filePathColumn = { MediaStore.Images.Media.DATA };  
 	      
@@ -131,13 +131,15 @@ public class DecodeFragment extends Fragment{
 	            
 	            strQR=decodeQRImage(bm);
 	            }  
-	        }
+	        
 	        
 	        else if(requestCode==1){
 	        	
 	        	strQR=data.getStringExtra("SCAN_RESULT");
 	        }
+	        }
 	        textview_content.setText(strQR);
+	       
 		}
 		
 		public String decodeQRImage(Bitmap mBmp){
@@ -153,7 +155,7 @@ public class DecodeFragment extends Fragment{
 			return strDecodedData;
 		}
 
-	    @Override
+
 	    public void onStop()
 	    {
 	       
@@ -164,7 +166,7 @@ public class DecodeFragment extends Fragment{
 		{
 			public void onClick(View v)
 			{
-				Button button = (Button) v;
+				ImageButton button = (ImageButton) v;
 				if (button == button_decode)
 					mListener1.onMyButtonClick1(1); 
 				if (button == button_pdecode)
@@ -172,5 +174,4 @@ public class DecodeFragment extends Fragment{
 				
 			}
 		}
-	  
 }
