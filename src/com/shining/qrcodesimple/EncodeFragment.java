@@ -34,6 +34,7 @@ public class EncodeFragment  extends Fragment{
 	
 	private static final String SAVE_PICTURE_PATH=Environment.getExternalStorageDirectory().toString()+"/QRCode";
 	
+	
 	private ImageButton button_encode;
 	private ImageButton button_save;
 	

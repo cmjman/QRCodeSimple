@@ -4,10 +4,12 @@ package com.shining.qrcodesimple;
 
 
 
+
 import jp.sourceforge.qrcode.QRCodeDecoder;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -17,12 +19,15 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 
 import android.support.v4.app.Fragment;
+import android.text.ClipboardManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class DecodeFragment extends Fragment{
@@ -74,6 +79,23 @@ public class DecodeFragment extends Fragment{
 		    button_pdecode=(ImageButton)getActivity().findViewById(R.id.button_pdecode);
 		    
 		    textview_content=(TextView)getActivity().findViewById(R.id.textview_content);
+		    
+		    textview_content.setOnLongClickListener(new OnLongClickListener(){
+			 
+			 public boolean onLongClick(View v){
+				 
+				 if(textview_content.getText()==null)
+				 {
+	        			Toast.makeText(getActivity(), "内容为空！请先扫码或者解析图片！",
+  	                    Toast.LENGTH_SHORT).show();
+	        			return false;
+				 }
+				 copyToClipboard();
+				 return true;
+				 
+			 }
+		    });
+			 
 		    
 		    MyButtonClickListener1 clickListener1 = new MyButtonClickListener1();
 		    
@@ -153,6 +175,17 @@ public class DecodeFragment extends Fragment{
 				e.printStackTrace();
 			}
 			return strDecodedData;
+		}
+		
+		private void copyToClipboard(){
+			
+			@SuppressWarnings("deprecation")
+			ClipboardManager clip = (ClipboardManager)getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+
+			clip.setText(strQR); 
+			
+			Toast.makeText(getActivity(), "已成功复制文本到剪贴板!", Toast.LENGTH_LONG).show();
+			
 		}
 
 
