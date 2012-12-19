@@ -10,7 +10,8 @@ public class AndroidQRCodeImage implements QRCodeImage {
 	public AndroidQRCodeImage(Bitmap image){
 		this.image=image;
 	}
-	
+	 
+	 
 	public int getWidth(){
 		return image.getWidth();
 	}
