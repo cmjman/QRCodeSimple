@@ -98,11 +98,11 @@
       </intent-filter>
     </activity>
     <activity android:name="com.shining.qrcodesimple.library.PreferencesActivity"
-              android:label="@string/preferences_name"
+             
               android:stateNotNeeded="true">
     </activity>
     <activity android:name="com.shining.qrcodesimple.library.encode.EncodeActivity"
-              android:label="@string/share_name"
+       
               android:stateNotNeeded="true">
       <intent-filter>
         <action android:name="com.google.zxing.client.android.ENCODE"/>
@@ -122,7 +122,7 @@
       </intent-filter>
     </activity>
     <activity android:name="com.shining.qrcodesimple.library.book.SearchBookContentsActivity"
-              android:label="@string/sbc_name"
+         
               android:stateNotNeeded="true"
               android:screenOrientation="landscape"
               android:configChanges="orientation|keyboardHidden">
@@ -132,7 +132,7 @@
       </intent-filter>
     </activity>
     <activity android:name="com.shining.qrcodesimple.library.share.ShareActivity"
-              android:label="@string/share_name"
+     
               android:stateNotNeeded="true"
               android:screenOrientation="user"
               android:theme="@android:style/Theme.Light">
@@ -142,7 +142,7 @@
       </intent-filter>
     </activity>
     <activity android:name="com.shining.qrcodesimple.library.history.HistoryActivity"
-              android:label="@string/history_title"
+        
               android:stateNotNeeded="true">
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
@@ -150,7 +150,7 @@
       </intent-filter>
     </activity>
     <activity android:name="com.shining.qrcodesimple.library.share.BookmarkPickerActivity"
-              android:label="@string/bookmark_picker_name"
+           
               android:stateNotNeeded="true">
       <intent-filter>
         <action android:name="android.intent.action.PICK"/>
@@ -158,7 +158,7 @@
       </intent-filter>
     </activity>
     <activity android:name="com.shining.qrcodesimple.library.share.AppPickerActivity"
-              android:label="@string/app_picker_name"
+        
               android:stateNotNeeded="true"
               android:configChanges="orientation">
       <intent-filter>
