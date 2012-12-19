@@ -1,5 +1,4 @@
-﻿package com.shining.qrcodesimple;
-
+package com.shining.qrcodesimple;
 
 
 

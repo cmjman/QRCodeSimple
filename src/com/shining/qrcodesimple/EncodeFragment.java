@@ -1,4 +1,4 @@
-﻿package com.shining.qrcodesimple;
+package com.shining.qrcodesimple;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

@@ -1,4 +1,4 @@
-﻿package com.shining.qrcodesimple;
+package com.shining.qrcodesimple;
 
 
 import com.shining.qrcodesimple.DecodeFragment.OnMyButtonClickListener1;
