@@ -1,4 +1,4 @@
-package com.shining.qrcodesimple;
+﻿package com.shining.qrcodesimple;
 
 import android.graphics.Bitmap;
 import jp.sourceforge.qrcode.data.QRCodeImage;

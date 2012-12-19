@@ -1,4 +1,4 @@
-package com.shining.qrcodesimple;
+ï»¿package com.shining.qrcodesimple;
 
 
 import com.shining.qrcodesimple.DecodeFragment.OnMyButtonClickListener1;
@@ -40,7 +40,7 @@ public class MainActivity extends FragmentActivity  implements OnMyButtonClickLi
 			case 2:
 			{
 				if(encodeFragment.isQRCodeEmpty())
-					Toast.makeText(MainActivity.this,"ÇëÏÈÉú³É¶şÎ¬ÂëÔÙ±£´æ£¡",Toast.LENGTH_SHORT).show();
+					Toast.makeText(MainActivity.this,"è¯·å…ˆç”ŸæˆäºŒç»´ç å†ä¿å­˜ï¼",Toast.LENGTH_SHORT).show();
 				else 
 					encodeFragment.saveQRCode();
 				break;
@@ -76,11 +76,11 @@ public class MainActivity extends FragmentActivity  implements OnMyButtonClickLi
 		mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
 	    mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 	
-	    mTabHost.addTab(mTabHost.newTabSpec("encode").setIndicator("±àÂë",
+	    mTabHost.addTab(mTabHost.newTabSpec("encode").setIndicator("ç¼–ç ",
 	        		getResources().getDrawable(R.drawable.button_encode)),
 	                EncodeFragment.class, null);
 	    
-	    mTabHost.addTab(mTabHost.newTabSpec("decode").setIndicator("½âÂë",
+	    mTabHost.addTab(mTabHost.newTabSpec("decode").setIndicator("è§£ç ",
 	        		getResources().getDrawable(R.drawable.button_decode)),
 	                DecodeFragment.class, null);
 	   }
@@ -101,10 +101,10 @@ public class MainActivity extends FragmentActivity  implements OnMyButtonClickLi
 			if(keyCode==KeyEvent.KEYCODE_BACK) {
 				
 				new AlertDialog.Builder(this)
-				 .setTitle("ÍË³ö")
-				 .setMessage("È·¶¨ÍË³öÂğ£¿")
+				 .setTitle("é€€å‡º")
+				 .setMessage("ç¡®å®šé€€å‡ºå—ï¼Ÿ")
 				 .setIcon(R.drawable.ic_launcher)
-				 .setPositiveButton("È·¶¨", new DialogInterface.OnClickListener() {
+				 .setPositiveButton("ç¡®å®š", new DialogInterface.OnClickListener() {
 				                 
 				      public void onClick(DialogInterface dialog, int which) {
 				                
@@ -112,7 +112,7 @@ public class MainActivity extends FragmentActivity  implements OnMyButtonClickLi
 				    	
 				      }
 				  })
-				 .setNegativeButton("È¡Ïû", new DialogInterface.OnClickListener() {
+				 .setNegativeButton("å–æ¶ˆ", new DialogInterface.OnClickListener() {
 				                 
 				        public void onClick(DialogInterface dialog, int which) {
 				                  
@@ -131,7 +131,7 @@ public class MainActivity extends FragmentActivity  implements OnMyButtonClickLi
 	 public boolean onCreateOptionsMenu(Menu menu) {
 	 
 	
-		 menu.add(0, 1, 1, "ÍË³ö");
+		 menu.add(0, 1, 1, "é€€å‡º");
 	
 	    return super.onCreateOptionsMenu(menu);
 	 }

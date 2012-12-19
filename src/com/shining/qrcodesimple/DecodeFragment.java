@@ -1,4 +1,4 @@
-package com.shining.qrcodesimple;
+ï»¿package com.shining.qrcodesimple;
 
 
 
@@ -86,7 +86,7 @@ public class DecodeFragment extends Fragment{
 				 
 				 if(textview_content.getText()==null)
 				 {
-	        			Toast.makeText(getActivity(), "ÄÚÈİÎª¿Õ£¡ÇëÏÈÉ¨Âë»òÕß½âÎöÍ¼Æ¬£¡",
+	        			Toast.makeText(getActivity(), "å†…å®¹ä¸ºç©ºï¼è¯·å…ˆæ‰«ç æˆ–è€…è§£æå›¾ç‰‡ï¼",
   	                    Toast.LENGTH_SHORT).show();
 	        			return false;
 				 }
@@ -184,7 +184,7 @@ public class DecodeFragment extends Fragment{
 
 			clip.setText(strQR); 
 			
-			Toast.makeText(getActivity(), "ÒÑ³É¹¦¸´ÖÆÎÄ±¾µ½¼ôÌù°å!", Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), "å·²æˆåŠŸå¤åˆ¶æ–‡æœ¬åˆ°å‰ªè´´æ¿!", Toast.LENGTH_LONG).show();
 			
 		}
 

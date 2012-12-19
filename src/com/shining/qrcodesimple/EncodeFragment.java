@@ -1,4 +1,4 @@
-package com.shining.qrcodesimple;
+ï»¿package com.shining.qrcodesimple;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -89,7 +89,7 @@ public class EncodeFragment  extends Fragment{
 				 
 				 if(file==null)
 				 {
-	        			Toast.makeText(getActivity(), "ÇëÏÈ±£´æ¶şÎ¬Âë£¡",
+	        			Toast.makeText(getActivity(), "è¯·å…ˆä¿å­˜äºŒç»´ç ï¼",
      	                    Toast.LENGTH_SHORT).show();
 	        			return false;
 				 }
@@ -99,10 +99,10 @@ public class EncodeFragment  extends Fragment{
         		Intent intent=new Intent(Intent.ACTION_SEND);   
         		intent.setType("image/*");
         		intent.putExtra(Intent.EXTRA_STREAM, uri);
-        		intent.putExtra(Intent.EXTRA_TEXT, "¶şÎ¬Âë£º");    
+        		intent.putExtra(Intent.EXTRA_TEXT, "äºŒç»´ç ï¼š");    
         		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);   
             	
-        		startActivity(Intent.createChooser(intent,"·ÖÏíÎÒµÄQRCode"));  
+        		startActivity(Intent.createChooser(intent,"åˆ†äº«æˆ‘çš„QRCode"));  
 				 
 				 return true;
 			 }
@@ -131,7 +131,7 @@ public class EncodeFragment  extends Fragment{
 			String strEncoding=edittext_content.getText().toString();
 				
 			if(strEncoding.isEmpty())
-				Toast.makeText(getActivity(), "ÊäÈëÄÚÈİÎª¿Õ£¬ÇëÏÈÊäÈëĞèÒª±àÂëµÄÄÚÈİ£¡",Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), "è¾“å…¥å†…å®¹ä¸ºç©ºï¼Œè¯·å…ˆè¾“å…¥éœ€è¦ç¼–ç çš„å†…å®¹ï¼",Toast.LENGTH_SHORT).show();
 				
 			com.swetake.util.Qrcode qrcode=new com.swetake.util.Qrcode();
 	
@@ -207,7 +207,7 @@ public class EncodeFragment  extends Fragment{
 				mBitmap.compress(Bitmap.CompressFormat.JPEG, 80, os);
 				os.flush();
 				os.close();
-				Toast.makeText(getActivity(), "±£´æQRCode³É¹¦£¡±£´æÎ»ÖÃÎª£º"+SAVE_PICTURE_PATH,
+				Toast.makeText(getActivity(), "ä¿å­˜QRCodeæˆåŠŸï¼ä¿å­˜ä½ç½®ä¸ºï¼š"+SAVE_PICTURE_PATH,
 	                    Toast.LENGTH_SHORT).show();
 				
 			}catch(FileNotFoundException e){
