@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/dialog"
+     >
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="编码界面 ：\n左键为生成按钮，右键为保存按钮，长按编码区可分享"
+        android:textColor="#00CCFF"
+        android:textSize="23dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="解码界面：\n左键为拍摄解码功能，右键为图片解码功能，长按解码区可复制文本"
+        android:textColor="#00CCFF"
+        android:textSize="23dp"
+        />
+</LinearLayout>

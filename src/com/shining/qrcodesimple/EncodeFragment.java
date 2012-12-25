@@ -6,10 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-
-
-
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -19,6 +17,7 @@ import android.graphics.Bitmap.Config;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,8 +33,8 @@ public class EncodeFragment  extends Fragment{
 	
 	private static final String SAVE_PICTURE_PATH=Environment.getExternalStorageDirectory().toString()+"/QRCode";
 	
-	
 	private ImageButton button_encode;
+	
 	private ImageButton button_save;
 	
 	private ImageView imageview_qrcode;
@@ -48,7 +47,7 @@ public class EncodeFragment  extends Fragment{
 
 	public interface OnMyButtonClickListener {
 		
-		public void onMyButtonClick(int i);
+		public void onMyButtonClick(int i) throws FileNotFoundException;
 		
 	}
 	
@@ -191,30 +190,40 @@ public class EncodeFragment  extends Fragment{
 	    	return false;
 	    }
 	    
-	    public void saveQRCode(){
-			
+	    public void saveQRCode() throws  FileNotFoundException{
+	    	
 			File path=new File(SAVE_PICTURE_PATH);
 			
 			if(!path.exists()){
 				path.mkdir();
 			}
 			
-			file=new File(SAVE_PICTURE_PATH + File.separator+"QRCard_"+System.currentTimeMillis()+".jpg");
-				
+	
+			String filename="QRCard_"+System.currentTimeMillis()+".png";
+			file=new File(SAVE_PICTURE_PATH + File.separator+filename);
+			
+	
+			ContentResolver cr =getActivity().getContentResolver();
+			
 			try{
 				
 				BufferedOutputStream os=new BufferedOutputStream(new FileOutputStream(file));
 				mBitmap.compress(Bitmap.CompressFormat.JPEG, 80, os);
 				os.flush();
 				os.close();
-				Toast.makeText(getActivity(), "保存QRCode成功！保存位置为："+SAVE_PICTURE_PATH,
-	                    Toast.LENGTH_SHORT).show();
+				
+				 Toast.makeText(getActivity(), "保存QRCode成功！保存位置为："+SAVE_PICTURE_PATH,
+		                    Toast.LENGTH_SHORT).show();
 				
 			}catch(FileNotFoundException e){
 				e.printStackTrace();
 			}catch(IOException e){
 				e.printStackTrace();
 			}
+			
+			MediaStore.Images.Media.insertImage(cr, SAVE_PICTURE_PATH + File.separator+filename, filename, "");
+				 
+			getActivity().sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
 		}
 	    
 	    public void onResume()
@@ -233,11 +242,19 @@ public class EncodeFragment  extends Fragment{
 			public void onClick(View v)
 			{
 				ImageButton button = (ImageButton) v;
+				try {
 				if (button == button_encode)
-					mListener.onMyButtonClick(1); 
+					
+					mListener.onMyButtonClick(1);
+			
 				if (button == button_save)
+					
 					mListener.onMyButtonClick(2); 
 				
+				} catch (FileNotFoundException e) {
+				
+					e.printStackTrace();
+				}
 			}
 		}
 }

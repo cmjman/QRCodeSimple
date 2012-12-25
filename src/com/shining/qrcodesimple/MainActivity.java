@@ -1,6 +1,9 @@
 package com.shining.qrcodesimple;
 
 
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
+
 import com.shining.qrcodesimple.DecodeFragment.OnMyButtonClickListener1;
 import com.shining.qrcodesimple.EncodeFragment;
 import com.shining.qrcodesimple.EncodeFragment.OnMyButtonClickListener;
@@ -12,8 +15,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 
@@ -27,7 +33,7 @@ public class MainActivity extends FragmentActivity  implements OnMyButtonClickLi
 
 	private DecodeFragment decodeFragment;
 	
-	public void onMyButtonClick(int i) {
+	public void onMyButtonClick(int i) throws FileNotFoundException {
 		
 		encodeFragment= (EncodeFragment) getSupportFragmentManager().findFragmentByTag("encode");
 		
@@ -130,15 +136,33 @@ public class MainActivity extends FragmentActivity  implements OnMyButtonClickLi
 	 
 	 public boolean onCreateOptionsMenu(Menu menu) {
 	 
-	
+		 
+		 menu.add(0, 0, 0, "帮助");
 		 menu.add(0, 1, 1, "退出");
-	
-	    return super.onCreateOptionsMenu(menu);
+		 
+		 return super.onCreateOptionsMenu(menu);
 	 }
 	 
 
      public boolean onOptionsItemSelected(MenuItem item) {
    
+    	 if(item.getItemId() == 0){
+    		 
+    		 LayoutInflater inflater = getLayoutInflater();
+    		 
+    		 View layout = inflater.inflate(R.layout.menu_help,(ViewGroup) findViewById(R.id.dialog));
+
+    		 new AlertDialog.Builder(this)
+    		 				.setTitle("使用帮助")
+    		 				.setView(layout)
+    		 				.setPositiveButton("返回",new DialogInterface.OnClickListener() {
+    						                 
+    		 					public void onClick(DialogInterface dialog, int which) {
+    		 						                  
+    		 						dialog.cancel();
+    		 					}}).show();
+    	 }
+    	 else
     	 if(item.getItemId() == 1){
     		 
     		  ExitProgram();

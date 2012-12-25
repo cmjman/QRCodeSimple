@@ -83,7 +83,7 @@ public class DecodeFragment extends Fragment{
 			 
 			 public boolean onLongClick(View v){
 				 
-				 if(textview_content.getText()==null)
+				 if(textview_content.getText()=="")
 				 {
 	        			Toast.makeText(getActivity(), "内容为空！请先扫码或者解析图片！",
   	                    Toast.LENGTH_SHORT).show();
@@ -113,11 +113,12 @@ public class DecodeFragment extends Fragment{
 	     intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
 	     startActivityForResult(intent, 1);
 	    	
-	    }	
+	    }	 
 	    
 	    public void pdecode(){
 	    	
-	    //	Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+	    	 //	Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+	  
 	    	Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 	    	intent.setType("image/*");
 			startActivityForResult(intent, 0);
@@ -133,10 +134,8 @@ public class DecodeFragment extends Fragment{
 	        
 	        if(requestCode==0){
 	        
-	        
-	            Uri selectedImage = data.getData();  
+	        	Uri selectedImage = data.getData();  
 	            String[] filePathColumn = { MediaStore.Images.Media.DATA };  
-	      
 	            Cursor cursor = getActivity().getContentResolver().query(selectedImage,  
 	                    filePathColumn, null, null, null);  
 	            cursor.moveToFirst();  
